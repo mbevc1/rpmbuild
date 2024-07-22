@@ -118,7 +118,7 @@ docker-pull: ## Update Docker image from repository
 docker-image: ## Build Docker image
 	echo -e "==> $(GREEN)Build Docker image $(IMG_NAME) for $(distro) as UID=$(ID_U)|GID=$(ID_G)$(NO_COLOR)"
 	$(DOCKER) build --pull --force-rm $(DOCKER_NET) \
-	    --build-arg OS_RELEASE=7 \
+	    --build-arg OS_RELEASE=9 \
 	    --build-arg UID=$(ID_U)1 \
 	    --build-arg GID=$(ID_G)1 \
 	    -f Dockerfile -t $(IMG_NAME) \
