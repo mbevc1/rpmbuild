@@ -131,3 +131,9 @@ docker-rmi: ## Clean Docker image
 	echo -e "==> $(YELLOW)Removing Docker image $(IMG_NAME)$(NO_COLOR)"
 	$(DOCKER) rmi $(IMG_NAME)
 	$(DONE)
+
+.PHONY: docker-push
+docker-rmi: ## Push to Docker Hub
+	echo -e "==> $(YELLOW)Pushing Docker image $(IMG_NAME)$(NO_COLOR)"
+	$(DOCKER) push $(IMG_NAME)
+	$(DONE)
