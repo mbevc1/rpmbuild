@@ -1,6 +1,6 @@
 # vim:ft=dockerfile
-ARG OS_RELEASE=7
-FROM centos:${OS_RELEASE}
+ARG OS_RELEASE=9
+FROM almalinux:${OS_RELEASE}
 LABEL maintainer="DevOps <ops@bevc.net>"
 
 ARG USR=builder
@@ -15,7 +15,7 @@ RUN yum install -y \
     gcc gcc-c++ \
     libtool libtool-ltdl zlib-devel \
     make cmake \
-    git curl \
+    git \
     pkgconfig \
     epel-release \
     sudo \
