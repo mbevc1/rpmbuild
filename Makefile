@@ -24,7 +24,7 @@ RELEASE ?= $(EPOCH)
 SPEC_VER := $(shell rpm -q --queryformat="%{version}\n" --specfile *.spec | head -n 1)
 VERSION ?= $(SPEC_VER)
 DONE = echo -e "\e[31m✓\e[0m \e[33m$@\e[0m \e[32mdone\e[0m"
-distro ?= centos7
+distro ?= 9
 
 ifneq ($(and $(BUILD_NUMBER),$(WORKSPACE),$(JENKINS_URL)),)
     BUILD_ENVIRONMENT = jenkins-ci
@@ -73,7 +73,7 @@ docker-build: docker-pull ## Build RPM using container
 ifndef SPEC
 	@echo -e "$(YELLOW)==>$(NO_COLOR) Missing $(RED)SPEC$(NO_COLOR) variable. $(NO_COLOR)\n"; exit 1;
 endif
-	echo -e "==> $(GREEN)Start Docker rpmbuild using $(SPEC) | distro=$(distro)$(NO_COLOR)"
+	echo -e "==> $(GREEN)Start Docker rpmbuild using $(SPEC) | distro=AlmaLinux$(distro)$(NO_COLOR)"
 	$(DOCKER) run --rm $(DOCKER_OPTS) -v $(MOUNT) \
             -e VERBOSE=0 \
             -e VERSION=$(VERSION) \
@@ -116,9 +116,9 @@ docker-pull: ## Update Docker image from repository
 
 .PHONY: docker-image
 docker-image: ## Build Docker image
-	echo -e "==> $(GREEN)Build Docker image $(IMG_NAME) for $(distro) as UID=$(ID_U)|GID=$(ID_G)$(NO_COLOR)"
+	echo -e "==> $(GREEN)Build Docker image $(IMG_NAME) for AlmaLinux $(distro) as UID=$(ID_U)|GID=$(ID_G)$(NO_COLOR)"
 	$(DOCKER) build --pull --force-rm $(DOCKER_NET) \
-	    --build-arg OS_RELEASE=9 \
+	    --build-arg OS_RELEASE=$(distro) \
 	    --build-arg UID=$(ID_U)1 \
 	    --build-arg GID=$(ID_G)1 \
 	    -f Dockerfile -t $(IMG_NAME) \

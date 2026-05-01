@@ -11,7 +11,7 @@ ARG GID=1001
 #RUN update-ca-trust extract
 #COPY ./packaging/*.repo /etc/yum.repos.d/
 
-RUN yum install -y \
+RUN dnf install -y \
     gcc gcc-c++ \
     libtool libtool-ltdl zlib-devel \
     make cmake \
@@ -22,7 +22,7 @@ RUN yum install -y \
     automake autoconf \
     yum-utils rpm-build rpmdevtools
 
-RUN yum clean all
+RUN dnf update --refresh -y && dnf clean all
 
 RUN groupadd -g $GID $USR
 RUN useradd $USR -u $UID -m -g $USR -G users,wheel && \
